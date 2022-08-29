@@ -14,9 +14,9 @@ import java.util.Map;
  * @date 2022/8/12 15:04
  */
 @Component
-@RabbitListener(queues = "DirectQueue")
 public class DirectReceiver {
     @RabbitHandler
+    @RabbitListener(queues = "DirectQueue")
     public void process(Map<String, Object> testMessage) {
         System.out.println("DirectReceiver消费者收到消息  : " + testMessage.toString());
     }

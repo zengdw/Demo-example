@@ -5,4 +5,4 @@ spring:
   application:
     name: rabbitmq-demo
   rabbitmq:
-    host: 192.168.40.124
+    host: 192.168.5.120
