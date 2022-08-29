@@ -6,3 +6,14 @@ spring:
     name: rabbitmq-demo
   rabbitmq:
     host: 192.168.5.120
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        # 手动确认
+        acknowledge-mode: manual
+    # 开启生产者消息确认
+    publisher-confirm-type: correlated
+    # 交换器到队列确认
+    publisher-returns: true
+
