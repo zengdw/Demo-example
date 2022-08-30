@@ -1,0 +1,8 @@
+#
+# A simple, old format, mime.types file
+#
+text/java		java JAVA
+text/xml		xml XML
+text/yml	    yml yaml YML YAML
+text/md		    md
+text/iml		iml

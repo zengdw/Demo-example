@@ -1,4 +1,4 @@
-package com.zengdw.base.handler;
+package com.zengdw.base.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

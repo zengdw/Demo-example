@@ -1,6 +1,5 @@
-package com.zengdw.base;
+package com.zengdw.base.server;
 
-import com.zengdw.base.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
