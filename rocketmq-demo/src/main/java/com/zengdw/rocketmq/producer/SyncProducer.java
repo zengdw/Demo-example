@@ -5,6 +5,7 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * 发送同步消息
@@ -27,8 +28,9 @@ public class SyncProducer {
             message.setDelayTimeLevel(3);
             // 发送消息到一个Broker
             SendResult result = producer.send(message);
+
             // 通过sendResult返回消息是否成功送达
-            System.out.printf("%s%n", result);
+            System.out.printf("%s %s%n", LocalDateTime.now(), result);
         }
         // 如果不再发送消息，关闭Producer实例。
         producer.shutdown();

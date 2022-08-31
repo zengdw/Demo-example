@@ -7,6 +7,7 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageClientExt;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 
 /**
@@ -33,7 +34,7 @@ public class Consumer {
         consumer.registerMessageListener((MessageListenerConcurrently) (list, context) -> {
             list.forEach(l -> {
                 String msg = new String(l.getBody(), StandardCharsets.UTF_8);
-                System.out.printf("Receive New Messages: %s %n", msg);
+                System.out.printf("%s Receive New Messages: %s %n", LocalDateTime.now(), msg);
             });
             // 标记该消息已经被成功消费
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
