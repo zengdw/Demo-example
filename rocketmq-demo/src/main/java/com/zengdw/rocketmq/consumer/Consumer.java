@@ -1,9 +1,9 @@
 package com.zengdw.rocketmq.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
-import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -22,7 +22,8 @@ public class Consumer {
         consumer.setNamesrvAddr("192.168.5.120:9876");
 
         // 订阅一个或者多个Topic，以及Tag来过滤需要消费的消息
-        consumer.subscribe("Topic", "*");
+        // 使用MessageSelector.bySql来过滤消息
+        consumer.subscribe("Topic", MessageSelector.bySql("a between 30 and 50"));
         // 注册回调实现类来处理从broker拉取回来的消息
         consumer.registerMessageListener((MessageListenerConcurrently) (list, context) -> {
             list.forEach(l -> {

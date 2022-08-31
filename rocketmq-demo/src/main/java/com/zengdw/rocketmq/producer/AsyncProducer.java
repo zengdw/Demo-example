@@ -32,7 +32,9 @@ public class AsyncProducer {
             Message msg = new Message("Topic",
                     "TagA",
                     "OrderID188",
-                    "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
+                    ("Hello world " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+            // 消息设置属性
+            msg.putUserProperty("a", String.valueOf(i));
             int index = i;
             producer.send(msg, new SendCallback() {
                 @Override
