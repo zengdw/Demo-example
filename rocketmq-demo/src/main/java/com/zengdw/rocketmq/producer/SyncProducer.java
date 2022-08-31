@@ -21,18 +21,19 @@ public class SyncProducer {
         // 设置NameServer地址
         producer.setNamesrvAddr("192.168.5.120:9876");
         producer.start();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             // 创建消息，并指定Topic，Tag和消息体
             Message message = new Message("Topic", "tag-1", ("Hello Rocketmq " + i).getBytes(StandardCharsets.UTF_8));
+            message.putUserProperty("id", String.valueOf(i));
             // 设置延时等级3,这个消息将在10s之后发送(现在只支持固定的几个时间,详看delayTimeLevel)
-            message.setDelayTimeLevel(3);
+//            message.setDelayTimeLevel(3);
             // 发送消息到一个Broker
             SendResult result = producer.send(message);
 
             // 通过sendResult返回消息是否成功送达
             System.out.printf("%s %s %s %n", LocalDateTime.now(), "Hello Rocketmq " + i, result.getSendStatus());
 
-//            Thread.sleep(500);
+            Thread.sleep(500);
         }
         // 如果不再发送消息，关闭Producer实例。
         producer.shutdown();
