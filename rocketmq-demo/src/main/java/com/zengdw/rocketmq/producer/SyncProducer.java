@@ -30,7 +30,9 @@ public class SyncProducer {
             SendResult result = producer.send(message);
 
             // 通过sendResult返回消息是否成功送达
-            System.out.printf("%s %s%n", LocalDateTime.now(), result);
+            System.out.printf("%s %s %s %n", LocalDateTime.now(), "Hello Rocketmq " + i, result.getSendStatus());
+
+//            Thread.sleep(500);
         }
         // 如果不再发送消息，关闭Producer实例。
         producer.shutdown();
