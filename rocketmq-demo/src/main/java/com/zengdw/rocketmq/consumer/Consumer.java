@@ -34,7 +34,10 @@ public class Consumer {
         consumer.registerMessageListener((MessageListenerConcurrently) (list, context) -> {
             list.forEach(l -> {
                 String msg = new String(l.getBody(), StandardCharsets.UTF_8);
-                System.out.printf("time=%s thread=%s queueId=%s content=%s %n", LocalDateTime.now(), Thread.currentThread().getName(), l.getQueueId(), msg);
+                String keys = l.getKeys();
+                int reconsumeTimes = l.getReconsumeTimes();
+                System.err.printf("重试次数：%s %n", reconsumeTimes);
+                System.out.printf("time=%s thread=%s queueId=%s key=%s content=%s %n", LocalDateTime.now(), Thread.currentThread().getName(), l.getQueueId(), keys, msg);
             });
             String id = list.get(0).getProperty("id");
             if(Integer.parseInt(id) % 2 == 0) {
@@ -42,6 +45,7 @@ public class Consumer {
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             } else {
                 System.err.println("RECONSUME_LATER");
+//                context.setDelayLevelWhenNextConsume(-1);
                 return ConsumeConcurrentlyStatus.RECONSUME_LATER;
             }
         });

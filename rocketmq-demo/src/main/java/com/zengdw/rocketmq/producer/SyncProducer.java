@@ -6,6 +6,7 @@ import org.apache.rocketmq.common.message.Message;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 发送同步消息
@@ -25,6 +26,7 @@ public class SyncProducer {
             // 创建消息，并指定Topic，Tag和消息体
             Message message = new Message("Topic", "tag-1", ("Hello Rocketmq " + i).getBytes(StandardCharsets.UTF_8));
             message.putUserProperty("id", String.valueOf(i));
+            message.setKeys(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             // 设置延时等级3,这个消息将在10s之后发送(现在只支持固定的几个时间,详看delayTimeLevel)
 //            message.setDelayTimeLevel(3);
             // 发送消息到一个Broker
