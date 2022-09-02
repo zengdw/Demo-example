@@ -41,6 +41,7 @@ public class Consumer {
             });
             String id = list.get(0).getProperty("id");
             if(Integer.parseInt(id) % 2 == 0) {
+                System.err.println("CONSUME_SUCCESS");
                 // 标记该消息已经被成功消费
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             } else {
