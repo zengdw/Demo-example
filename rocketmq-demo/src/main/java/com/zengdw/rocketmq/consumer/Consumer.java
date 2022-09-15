@@ -3,7 +3,9 @@ package com.zengdw.rocketmq.consumer;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListener;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -25,11 +27,17 @@ public class Consumer {
 //        consumer.setConsumeThreadMin();
         // 每次最大消费的消息条数 默认是 1，即一次只消费一条消息，例如设置为 N，那么每次消费的消息数小于等于 N。
 //        consumer.setConsumeMessageBatchMaxSize();
+        // 设置消费组的集群/广播模式 默认是集群模式
+        consumer.setMessageModel(MessageModel.CLUSTERING);
+
+        // 最大重试次数
+//        consumer.setMaxReconsumeTimes(10);
 
         // 订阅一个或者多个Topic，以及Tag来过滤需要消费的消息
         // 使用MessageSelector.bySql来过滤消息
 //        consumer.subscribe("Topic", MessageSelector.bySql("a between 30 and 50"));
         consumer.subscribe("Topic", "*");
+
         // 注册回调实现类来处理从broker拉取回来的消息
         consumer.registerMessageListener((MessageListenerConcurrently) (list, context) -> {
             list.forEach(l -> {

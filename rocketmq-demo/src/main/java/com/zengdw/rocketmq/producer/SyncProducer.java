@@ -30,7 +30,13 @@ public class SyncProducer {
             // 设置延时等级3,这个消息将在10s之后发送(现在只支持固定的几个时间,详看delayTimeLevel)
 //            message.setDelayTimeLevel(3);
             // 发送消息到一个Broker
-            SendResult result = producer.send(message);
+//            SendResult result = producer.send(message);
+            // 顺序消息发送 保证符合规则的消息发送到同一队列
+            SendResult result = producer.send(message, (mqs, msg, arg) -> {
+                int arg1 = (int) arg;
+                int i1 = arg1 % mqs.size();
+                return mqs.get(i1);
+            }, i);
 
             // 通过sendResult返回消息是否成功送达
             System.out.printf("%s %s %s %n", LocalDateTime.now(), "Hello Rocketmq " + i, result.getSendStatus());
