@@ -22,6 +22,8 @@ public class SyncProducer {
         // 设置NameServer地址
         producer.setNamesrvAddr("192.168.5.120:9876");
         producer.start();
+        // 设置同步发送失败时重试发送的次数，默认为2次
+        producer.setRetryTimesWhenSendFailed(3);
         for (int i = 0; i < 10; i++) {
             // 创建消息，并指定Topic，Tag和消息体
             Message message = new Message("Topic", "tag-1", ("Hello Rocketmq " + i).getBytes(StandardCharsets.UTF_8));
